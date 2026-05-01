@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(AudioLabPro-V2 VERSION 0.0.1)
 
-# Metodo più sicuro per scaricare JUCE
+# Metodo sicuro per scaricare JUCE
 include(FetchContent)
 FetchContent_Declare(
     juce
@@ -31,5 +31,4 @@ target_link_libraries(AudioLabPro-V2 PRIVATE
     juce::juce_gui_basics
     juce::juce_graphics)
 
-# Importante per plugin moderni
-juce_set_vst3_install_path(AudioLabPro-V2)
+# ABBIAMO TOLTO L'ULTIMA RIGA CHE DAVA ERRORE
