@@ -1,31 +1,37 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#pragma once
+#include <JuceHeader.h>
 
-AudioLabProAudioProcessor::AudioLabProAudioProcessor()
-    : AudioProcessor (BusesProperties().withInput("Input", juce::AudioChannelSet::stereo(), true)
-                                       .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
-      treeState (*this, nullptr, "PARAMS", createParameterLayout())
-{}
-
-AudioLabProAudioProcessor::~AudioLabProAudioProcessor() {}
-
-juce::AudioProcessorValueTreeState::ParameterLayout AudioLabProAudioProcessor::createParameterLayout()
+class AudioLabProAudioProcessor : public juce::AudioProcessor
 {
-    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
-    params.push_back (std::make_unique<juce::AudioParameterFloat> ("gain", "Gain", 0.0f, 1.0f, 0.5f));
-    return { params.begin(), params.end() };
-}
+public:
+    AudioLabProAudioProcessor();
+    ~AudioLabProAudioProcessor() override;
 
-void AudioLabProAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&)
-{
-    auto gain = treeState.getRawParameterValue ("gain")->load();
-    buffer.applyGain (gain);
-}
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override {}
+    void releaseResources() override {}
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
-juce::AudioProcessorEditor* AudioLabProAudioProcessor::createEditor() {
-    return new AudioLabProAudioProcessorEditor (*this);
-}
+    juce::AudioProcessorEditor* createEditor() override;
+    bool hasEditor() const override { return true; }
 
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
-    return new AudioLabProAudioProcessor();
-}
+    const juce::String getName() const override { return "AudioLabPro V2"; }
+    bool acceptsMidi() const override { return false; }
+    bool producesMidi() const override { return false; }
+    double getTailLengthSeconds() const override { return 0.0; }
+
+    int getNumPrograms() override { return 1; }
+    int getCurrentProgram() override { return 0; }
+    void setCurrentProgram (int index) override {}
+    const juce::String getProgramName (int index) override { return {}; }
+    void changeProgramName (int index, const juce::String& newName) override {}
+
+    void getStateInformation (juce::MemoryBlock& destData) override {}
+    void setStateInformation (const void* data, int sizeInBytes) override {}
+
+    juce::AudioProcessorValueTreeState& getTreeState() { return treeState; }
+
+private:
+    juce::AudioProcessorValueTreeState treeState;
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioLabProAudioProcessor)
+};
