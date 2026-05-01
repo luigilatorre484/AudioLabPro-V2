@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 
 project(AudioLabPro-V2 VERSION 0.0.1)
 
-# Metodo sicuro per scaricare JUCE
 include(FetchContent)
 FetchContent_Declare(
     juce
@@ -19,6 +18,9 @@ juce_add_plugin(AudioLabPro-V2
     FORMATS VST3 Standalone
     PRODUCT_NAME "AudioLabPro V2")
 
+# --- QUESTA È LA RIGA FONDAMENTALE CHE MANCAVA ---
+juce_generate_juce_header(AudioLabPro-V2)
+
 target_sources(AudioLabPro-V2 PRIVATE
     Source/PluginProcessor.cpp
     Source/PluginProcessor.h
@@ -30,5 +32,3 @@ target_link_libraries(AudioLabPro-V2 PRIVATE
     juce::juce_audio_processors
     juce::juce_gui_basics
     juce::juce_graphics)
-
-# ABBIAMO TOLTO L'ULTIMA RIGA CHE DAVA ERRORE
