@@ -2,8 +2,15 @@ cmake_minimum_required(VERSION 3.15)
 
 project(AudioLabPro_Finalizer VERSION 2.0.0 LANGUAGES CXX)
 
-# Include JUCE - Assicurati che la cartella si chiami JUCE
-add_subdirectory(JUCE)
+# --- SCARICA JUCE AUTOMATICAMENTE ---
+include(FetchContent)
+FetchContent_Declare(
+    juce
+    GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
+    GIT_TAG t6.1.6 # Versione stabile
+)
+FetchContent_MakeAvailable(juce)
+# ------------------------------------
 
 juce_add_plugin(AudioLabPro-V2
     COMPANY_NAME "AudioLab"
@@ -24,7 +31,7 @@ target_sources(AudioLabPro-V2 PRIVATE
     Source/PluginEditor.cpp
     Source/PluginEditor.h)
 
-# Questo comando gestisce l'immagine di sfondo
+# Assicurati che Resources/background.png esista su GitHub!
 juce_add_binary_data(AudioData SOURCES
     Resources/background.png)
 
