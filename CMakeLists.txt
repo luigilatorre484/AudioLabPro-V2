@@ -15,10 +15,13 @@ juce_add_plugin(AudioLabPro-V2
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
-    FORMATS VST3 Standalone
+    FORMATS VST3 Standalone  # Assicuriamoci che VST2 NON sia scritto qui
     PRODUCT_NAME "AudioLabPro V2")
 
-# --- QUESTA È LA RIGA FONDAMENTALE CHE MANCAVA ---
+# --- AGGIUNGI QUESTE DUE RIGHE PER EVITARE L'ERRORE VST2 ---
+juce_set_vst2_sdk_path(OFF) 
+target_compile_definitions(AudioLabPro-V2 PUBLIC JUCE_VST3_CAN_REPLACE_VST2=0)
+
 juce_generate_juce_header(AudioLabPro-V2)
 
 target_sources(AudioLabPro-V2 PRIVATE
