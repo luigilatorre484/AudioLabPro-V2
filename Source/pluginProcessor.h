@@ -50,5 +50,5 @@ public:
 private:
     std::vector<float> fftData;
     juce::dsp::FFT forwardFFT;
-    JU_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioLabProAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioLabProAudioProcessor)
 };
