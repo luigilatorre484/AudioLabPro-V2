@@ -7,7 +7,7 @@ include(FetchContent)
 FetchContent_Declare(
     juce
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-    GIT_TAG t6.1.6 # Versione stabile
+    GIT_TAG 6.1.6 # <--- Corretto qui, senza la 't'
 )
 FetchContent_MakeAvailable(juce)
 # ------------------------------------
